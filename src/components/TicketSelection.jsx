@@ -8,7 +8,10 @@ const TicketSelection = () => {
 
   const handleNext = () => {
     if (selectedTicket) {
-      navigate("/attendee-details", { state: { selectedTicket, ticketCount } });
+      const ticketData = { selectedTicket, ticketCount };
+      localStorage.setItem("ticketData", JSON.stringify(ticketData));
+
+      navigate("/attendee-details");
     } else {
       alert("Please select a ticket type.");
     }
@@ -29,7 +32,7 @@ const TicketSelection = () => {
         </div>
 
         <div className="border-[#197686] border bg-[#08252B] p-4 rounded-lg">
-          <div className="border border-[#197686] p-4 rounded-lg mb-4 text-center">
+          <div className="border bg-[#07373F] border-[#197686] p-4 rounded-lg mb-4 text-center">
             <h3 className="text-3xl font-semibold">Techember Fest &apos;25</h3>
             <p className="text-base">
               Join us for an unforgettable experience at
@@ -39,31 +42,26 @@ const TicketSelection = () => {
               📍[Event Location] || March 15, 2025 | 7:00 PM
             </p>
           </div>
-          <hr className="bg-[#07373F] text-[#07373F] h-1 mb-3" />
+          <hr className="text-[#07373F] h-1 mb-3" />
+
           <div className="mb-4">
             <h4 className="font-semibold mb-2">Select Ticket Type:</h4>
-            <div className="flex w-full flex-wrap gap-2">
+            <div className="flex flex-col md:flex-row w-full justify-between gap-4">
               {["REGULAR", "VIP", "VVIP"].map((type, index) => (
                 <button
                   key={index}
                   onClick={() => setSelectedTicket(type)}
-                  className={`p-3 w-[13.1 rem] rounded-lg border text-left ${
+                  className={`p-4 w-full md:w-[10rem] h-[6rem] rounded-lg border flex flex-col justify-between text-nowrap ${
                     selectedTicket === type
-                      ? "bg-[#197686] border-[#0E464F]"
+                      ? "bg-[#197686] border-[#2BA4B9]" // Highlight when selected
                       : "bg-[#07373F] border-[#0E464F]"
                   }`}
                 >
-                  <div className="flex flex-row gap-2 text-nowrap items-center">
-                    <span>{type} ACCESS</span>
-                    <span className="border bg-[#0E464F] border-[#2BA4B9] p-3">
-                      {type === "REGULAR"
-                        ? "Free"
-                        : type === "VIP"
-                        ? "$50"
-                        : "$150"}
-                    </span>
-                  </div>
-                  <p className="text-xs text-gray-300">20 left!</p>
+                  <span className="text-lg font-semibold">
+                    {type === "REGULAR" ? "Free" : "$150"}
+                  </span>
+                  <p className="text-sm">{type} ACCESS</p>
+                  <span className="text-xs text-gray-300">20/52</span>
                 </button>
               ))}
             </div>
@@ -84,7 +82,7 @@ const TicketSelection = () => {
             </select>
           </div>
 
-          <div className="flex bg-[#041E23] px-4 rounded-2xl justify-between gap-4">
+          <div className="flex-col sm:flex sm:flex-row bg-[#05252C] px-4 py-3 sm:py-0 rounded-2xl justify-between gap-4 mt-4 sm:h-14 h-24 space-y-2 sm:space-y-0 items-center">
             <button className="w-full p-1 bg-gray-700 rounded hover:bg-gray-600">
               Cancel
             </button>
