@@ -1,8 +1,8 @@
 const About = () => {
   return (
-    <section className="w-full  px-6 md:px-20 py-6 text-white flex  justify-center">
-      <div className="border border-[#0E464F] rounded-4xl w-[70%] py-8">
-        <div className="max-w-xl mx-auto   p-8 rounded-lg shadow-lg">
+    <section className="w-full px-4 sm:px-6 md:px-20 py-6 text-white flex justify-center">
+      <div className="border border-[#0E464F] rounded-4xl w-full sm:w-[95%] md:w-[90%] lg:w-[80%] xl:w-[70%] py-8">
+        <div className="max-w-4xl mx-auto p-4 sm:p-6 md:p-8 rounded-lg shadow-lg">
           {/* Header */}
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-4">
             Event Ticket Booking UI – Open Source Practice Project 🎟️
@@ -69,15 +69,15 @@ const About = () => {
                 <li>• Upon successful booking, users should receive:</li>
                 <li>• A visual ticket preview with a unique QR Code.</li>
                 <li>
-                  • • An option to download the ticket as PDF or save it to
-                  their device.
+                  • An option to download the ticket as PDF or save it to their
+                  device.
                 </li>
                 <li>• An email confirmation containing ticket details.</li>
                 <li>• How to Build This 🚀</li>
               </ul>
             </div>
-            <h3>This UI can be implemented using:</h3>
-            {/* ------front-end------ */}
+
+            {/* Frontend */}
             <div>
               <h3 className="text-lg font-semibold mb-2">
                 📌 Frontend (Next.js or React)
@@ -99,7 +99,8 @@ const About = () => {
                 </li>
               </ul>
             </div>
-            {/* ------back-end------ */}
+
+            {/* Backend */}
             <div>
               <h3 className="text-lg font-semibold mb-2">
                 📌 Backend (Optional)
@@ -115,23 +116,21 @@ const About = () => {
                 </li>
               </ul>
             </div>
-            {/* ------payment------ */}
+
+            {/* Payment Integration */}
             <div>
               <h3 className="text-lg font-semibold mb-2">
                 📌 Payment Integration
               </h3>
               <ul className="space-y-1">
-                <li> • For paid events, developers should integrate:</li>
-                <li> • Stripe Checkout (for international transactions)</li>
-                <li> • Paystack or Flutterwave (for African users)</li>
-                <li>What You’ll Learn 🧑‍💻</li>
-                <li>
-                  {" "}
-                  • File handling & validation (profile picture uploads).
-                </li>
+                <li>• For paid events, developers should integrate:</li>
+                <li>• Stripe Checkout (for international transactions)</li>
+                <li>• Paystack or Flutterwave (for African users)</li>
+                <li>What You’ll Learn �</li>
+                <li>• File handling & validation (profile picture uploads).</li>
                 <li>• Dynamic UI updates based on ticket selection.</li>
                 <li>• Persisting bookings using local state or a backend.</li>
-                <li> • Integrating payment gateways for ticket purchases.</li>
+                <li>• Integrating payment gateways for ticket purchases.</li>
                 <li>
                   • Generating & validating QR Codes for event check-in
                   (Advanced).
@@ -141,22 +140,25 @@ const About = () => {
             </div>
           </div>
         </div>
+
+        {/* Enjoy Section */}
         <div className="max-w-xl mx-auto flex items-center justify-center my-8 px-4">
           <p className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
             💛 Enjoy
           </p>
         </div>
 
+        {/* Buttons */}
         <div className="max-w-md border border-[#24A0B5] rounded-2xl mx-auto flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center p-2 items-center">
           <a
             className="border rounded-lg border-[#24A0B5] w-full sm:max-w-[150px] px-6 sm:px-8 md:px-10 py-2 sm:py-3 text-[#24A0B5] text-sm sm:text-base text-center text-nowrap"
-            href=""
+            href="https://www.figma.com/design/9724jilUEr4EMJBf9YxHAL/Event-Ticket-Booking-UI-%E2%80%93-Open-Source-Practice-Project-%F0%9F%8E%9F%EF%B8%8F-(Community)?node-id=5-3362&t=kHER4NtAd4wuCu1Z-0"
           >
             Design File
           </a>
           <a
             className="rounded-lg bg-[#24A0B5] text-white w-full sm:max-w-[150px] px-6 sm:px-8 md:px-10 py-2 sm:py-3 text-sm sm:text-base text-center text-nowrap"
-            href=""
+            href="https://github.com/lordgreg003/hng-ticket-generator-profile"
           >
             Github Code
           </a>
