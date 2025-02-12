@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { assets } from "../assets/assets";
 import { Link } from "react-router-dom";
+import html2canvas from "html2canvas";
 
 const Tickets = () => {
   const [attendeeDetails, setAttendeeDetails] = useState(null);
@@ -13,20 +14,41 @@ const Tickets = () => {
     }
   }, []);
 
+  const handleDownloadTicket = () => {
+    // Get the ticket element
+    const ticketElement = document.querySelector(".ticket-container");
+
+    if (ticketElement) {
+      // Use html2canvas to capture the ticket as an image
+      html2canvas(ticketElement).then((canvas) => {
+        // Convert the canvas to a data URL
+        const image = canvas.toDataURL("image/png");
+
+        // Create a temporary link element
+        const link = document.createElement("a");
+        link.href = image;
+        link.download = "ticket.png"; // File name for download
+        document.body.appendChild(link);
+        link.click(); // Trigger the download
+        document.body.removeChild(link); // Clean up
+      });
+    }
+  };
+
   if (!attendeeDetails) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div className="relative border-1 border-[#24A0B5] h-[128vh] justify-center w-md flex mx-auto rounded-xl">
+    <div className="relative border-1 border-[#24A0B5] h-[128vh] justify-center sm:w-md flex mx-auto rounded-xl">
       <p className="absolute translate-y-8 text-white text-3xl font-bold">
         Your Ticket Is Booked!
       </p>
-      <p className="absolute text-white text-lg translate-y-16">
+      <p className="absolute text-xs text-white sm:text-lg translate-y-16">
         Check your email for a copy or you can download
       </p>
       <img className="absolute translate-y-28 " src={assets.ticket} alt="" />
-      <div className="absolute h-[28.2rem] w-[16.5rem] translate-y-5 rounded-2xl justify-center items-center flex flex-col ">
+      <div className="ticket-container absolute h-[28.2rem] w-[16.5rem] translate-y-5 rounded-2xl justify-center items-center flex flex-col ">
         <div className="absolute  translate-y-16 border-[#24A0B5] border-3 rounded-xl w-[55%] h-[32.5%]">
           <img
             src={attendeeDetails.profilePhoto}
@@ -40,7 +62,7 @@ const Tickets = () => {
               <p className="text-[10px] text-white  ">Enter your name</p>
               <p className="text-xs px-1 text-white">{attendeeDetails.name}</p>
             </div>
-            <div className="p-1 bg-[#08343C] w-1/2">
+            <div className="bg-[#08343C] w-1/2">
               <p className="text-[10px] text-white">Enter your email*</p>
               <p className="text-[10px] px-1 text-white">
                 {attendeeDetails.email}
@@ -61,19 +83,22 @@ const Tickets = () => {
               </p>
             </div>
           </div>
-          <div className=" w-full h-[4.3rem]">
-            <h3></h3>
-          </div>
+          <div className=" w-full h-[4.3rem]"></div>
         </div>
       </div>
-      <div className="absolute translate-y-[38.4rem]  border-black border-2 h-[5rem] w-[16.5rem] "></div>
+      <div className="absolute translate-y-[38.4rem]  border-black border-2 h-[5rem] w-[16.5rem] ">
+        <img className="w-full h-[5rem]" src={assets.barcode} alt="barcode" />
+      </div>
       <div className="absolute translate-y-[45rem]  flex flex-col sm:flex-row gap-4 justify-center items-center p-4">
         <Link to={"/"}>
           <button className="px-6 py-3 border-2 border-cyan-500 text-cyan-500 rounded-md hover:bg-cyan-500 hover:text-white transition duration-300">
             Book Another Ticket
           </button>
         </Link>
-        <button className="px-6 py-3 bg-cyan-500 text-white rounded-md hover:bg-cyan-600 transition duration-300">
+        <button
+          onClick={handleDownloadTicket}
+          className="px-6 py-3 bg-cyan-500 text-white rounded-md hover:bg-cyan-600 transition duration-300"
+        >
           Download Ticket
         </button>
       </div>

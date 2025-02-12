@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
 import axios from "axios";
 import { MdOutlineMail } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const AttendeeDetails = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const AttendeeDetails = () => {
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [ticketData, setTicketData] = useState(null);
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -44,31 +46,53 @@ const AttendeeDetails = () => {
             },
           }
         );
-        console.log("Upload successful:", response.data.secure_url);
+        toast("Upload successful:", response.data.secure_url);
         setProfilePhoto(response.data.secure_url);
       } catch (error) {
-        console.error("Upload failed:", error);
+        toast.error("Upload failed:", error);
       }
     }
   };
 
-  const handleSubmit = () => {
+  const sendVerificationEmail = async (email, name) => {
+    try {
+      const response = await axios.post(
+        "https://hng-ticket-generator-profile-backend.onrender.com/send-verification-email",
+        {
+          email,
+          name,
+        }
+      );
+
+      if (response.data.success) {
+        toast.success("Verification email sent successfully!");
+      } else {
+        toast.error("Failed to send verification email.");
+      }
+    } catch (error) {
+      toast.error("Error sending verification email:", error);
+      alert(`Error sending verification email: ${error.message}`);
+    }
+  };
+
+  const handleSubmit = async () => {
     const newErrors = {};
     if (!name.trim()) {
-      newErrors.name = "Name is required.";
+      toast.name = "Name is required.";
     }
     if (!email.trim()) {
       newErrors.email = "Email is required.";
     } else if (!validateEmail(email)) {
-      newErrors.email = "Please enter a valid email address.";
+      toast.email = "Please enter a valid email address.";
     }
     if (!profilePhoto) {
-      newErrors.profilePhoto = "Profile photo is required.";
+      toast.profilePhoto = "Profile photo is required.";
     }
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
+
     const attendeeDetails = {
       name,
       email,
@@ -79,6 +103,10 @@ const AttendeeDetails = () => {
     const finalTicketData = { ...ticketData, ...attendeeDetails };
 
     localStorage.setItem("finalTicketData", JSON.stringify(finalTicketData));
+
+    setIsLoading(true);
+    await sendVerificationEmail(email, name);
+    setIsLoading(false);
     navigate("/tickets");
   };
 
@@ -93,7 +121,7 @@ const AttendeeDetails = () => {
 
     const file = e.dataTransfer.files[0];
     if (file && file.type.startsWith("image/")) {
-      handleFileUpload({ target: { files: [file] } }); // Reuse the file upload handler
+      handleFileUpload({ target: { files: [file] } });
     } else {
       setErrors({
         ...errors,
@@ -184,12 +212,6 @@ const AttendeeDetails = () => {
               placeholder="hello@avioflagos.io"
             />
           </div>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
           {errors.email && (
             <p className="text-red-500 text-sm mb-2">{errors.email}</p>
           )}
@@ -211,9 +233,10 @@ const AttendeeDetails = () => {
             </button>
             <button
               onClick={handleSubmit}
+              disabled={isLoading} // Disable button while loading
               className="w-full p-1 bg-blue-600 rounded hover:bg-blue-500 h-10 flex items-center justify-center"
             >
-              Get My Free Ticket
+              {isLoading ? "Sending..." : "Get My Free Ticket"}
             </button>
           </div>
         </div>
