@@ -47,47 +47,51 @@ const Tickets = () => {
       <p className="absolute text-xs text-white sm:text-lg translate-y-16">
         Check your email for a copy or you can download
       </p>
-      <img className="absolute translate-y-28 " src={assets.ticket} alt="" />
+      <img
+        className="ticket-container  absolute translate-y-28 "
+        src={assets.ticket}
+        alt=""
+      />
       <div className="ticket-container absolute h-[28.2rem] w-[16.5rem] translate-y-5 rounded-2xl justify-center items-center flex flex-col ">
-        <div className="absolute  translate-y-16 border-[#24A0B5] border-3 rounded-xl w-[55%] h-[32.5%]">
+        <div className="ticket-container absolute  translate-y-16 border-[#24A0B5] border-3 rounded-xl w-[55%] h-[32.5%]">
           <img
             src={attendeeDetails.profilePhoto}
             alt="Profile"
-            className="w-full h-full rounded-xl object-cover"
+            className="ticket-container w-full h-full rounded-xl object-cover"
           />
         </div>
-        <div className="absolute translate-y-[15.4rem]  w-[88.5%] h-[36%]">
-          <div className=" w-full h-12 flex">
+        <div className="ticket-container absolute translate-y-[15.4rem]  w-[88.5%] h-[36%]">
+          <div className="ticket-container w-full h-12 flex">
             <div className=" bg-[#08343C] p-1  w-1/2">
               <p className="text-[10px] text-white  ">Enter your name</p>
               <p className="text-xs px-1 text-white">{attendeeDetails.name}</p>
             </div>
-            <div className="bg-[#08343C] w-1/2">
+            <div className="ticket-container bg-[#08343C] w-1/2">
               <p className="text-[10px] text-white">Enter your email*</p>
               <p className="text-[10px] px-1 text-white">
                 {attendeeDetails.email}
               </p>
             </div>
           </div>
-          <div className=" w-full h-10 flex">
+          <div className="ticket-container w-full h-10 flex">
             <div className="p-1 bg-[#08343C] w-1/2">
               <p className="text-[10px] text-white ">Ticket Type:</p>
               <p className="text-[10px] px-1 text-white">
                 {attendeeDetails.selectedTicket}
               </p>
             </div>
-            <div className="p-1 bg-[#08343C] w-1/2">
+            <div className="ticket-container p-1 bg-[#08343C] w-1/2">
               <p className="text-[10px] text-white ">Ticket for:</p>
               <p className="text-[10px] px-1 text-white">
                 {attendeeDetails.ticketCount}
               </p>
             </div>
           </div>
-          <div className=" w-full h-[4.3rem]"></div>
+          <div className="ticket-container w-full h-[4.3rem]"></div>
         </div>
       </div>
-      <div className="absolute translate-y-[38.4rem]  border-black border-2 h-[5rem] w-[16.5rem] ">
-        <img className="w-full h-[5rem]" src={assets.barcode} alt="barcode" />
+      <div className="ticket-container absolute translate-y-[38.4rem]  border-black border-2 h-[5rem] w-[16.5rem] ">
+        <img className="ticket-container w-full h-[5rem]" src={assets.barcode} alt="barcode" />
       </div>
       <div className="absolute translate-y-[45rem]  flex flex-col sm:flex-row gap-4 justify-center items-center p-4">
         <Link to={"/"}>
