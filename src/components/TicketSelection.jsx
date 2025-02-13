@@ -83,12 +83,12 @@ const TicketSelection = () => {
           </div>
 
           <div className="flex-col sm:flex sm:flex-row bg-[#05252C] px-4 py-3 sm:py-0 rounded-2xl justify-between gap-4 mt-4 sm:h-14 h-24 space-y-2 sm:space-y-0 items-center">
-            <button className="w-full p-1 bg-gray-700 rounded hover:bg-gray-600">
+            <button className="w-full p-1 border-[#24A0B5] rounded border">
               Cancel
             </button>
             <button
               onClick={handleNext}
-              className="w-full p-1 bg-blue-600 rounded hover:bg-blue-500"
+              className="w-full p-1 bg-[#24A0B5] rounded"
             >
               Next
             </button>

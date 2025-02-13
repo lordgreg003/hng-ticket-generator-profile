@@ -48,6 +48,7 @@ const AttendeeDetails = () => {
         );
         toast("Upload successful:", response.data.secure_url);
         setProfilePhoto(response.data.secure_url);
+        setErrors({ ...errors, profilePhoto: "" }); // Clear any previous error
       } catch (error) {
         toast.error("Upload failed:", error);
       }
@@ -78,15 +79,15 @@ const AttendeeDetails = () => {
   const handleSubmit = async () => {
     const newErrors = {};
     if (!name.trim()) {
-      toast.name = "Name is required.";
+      newErrors.name = "Name is required.";
     }
     if (!email.trim()) {
       newErrors.email = "Email is required.";
     } else if (!validateEmail(email)) {
-      toast.email = "Please enter a valid email address.";
+      newErrors.email = "Please enter a valid email address.";
     }
     if (!profilePhoto) {
-      toast.profilePhoto = "Profile photo is required.";
+      newErrors.profilePhoto = "Profile photo is required.";
     }
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -154,7 +155,9 @@ const AttendeeDetails = () => {
             onDragOver={handleDragOver}
             onDrop={handleDrop}
           >
-            <label className="block mb-2 text-base">Upload Profile Photo</label>
+            <label className="block mb-2 text-base">
+              Upload Profile Photo *
+            </label>
             <div
               className="border border-[#197686] p-6 cursor-pointer bg-[#07373F] text-center h-48 md:h-40 flex items-center justify-center"
               onClick={handleUploadAreaClick}
@@ -194,7 +197,6 @@ const AttendeeDetails = () => {
             className="w-full p-2 rounded-xl bg-[#08252B] border border-[#197686] focus:outline-none mb-2 h-12"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            required
           />
           {errors.name && (
             <p className="text-red-500 text-sm mb-2">{errors.name}</p>
@@ -208,7 +210,6 @@ const AttendeeDetails = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
               placeholder="hello@avioflagos.io"
             />
           </div>
@@ -221,20 +222,19 @@ const AttendeeDetails = () => {
             className="w-full p-2 rounded-lg bg-[#08252B] border border-[#197686] focus:outline-none mb-4 h-24"
             value={about}
             onChange={(e) => setAbout(e.target.value)}
-            required
           ></textarea>
 
           <div className="flex-col sm:flex sm:flex-row bg-[#05252C] px-4 rounded-2xl justify-between gap-4 mt-4 sm:h-14 h-24 space-y-2 sm:space-y-0 items-center">
             <button
               onClick={() => navigate(-1)}
-              className="w-full p-1 bg-gray-700 rounded hover:bg-gray-600 h-10 flex items-center justify-center"
+              className="w-full p-1 border-[#24A0B5] border rounded  h-10 flex items-center justify-center"
             >
               Back
             </button>
             <button
               onClick={handleSubmit}
               disabled={isLoading} // Disable button while loading
-              className="w-full p-1 bg-blue-600 rounded hover:bg-blue-500 h-10 flex items-center justify-center"
+              className="w-full p-1 bg-[#24A0B5] rounded h-10 flex items-center justify-center"
             >
               {isLoading ? "Sending..." : "Get My Free Ticket"}
             </button>
