@@ -46,12 +46,18 @@ const AttendeeDetails = () => {
             },
           }
         );
-        toast("Upload successful:", response.data.secure_url);
+        toast.success("Upload successful!");
         setProfilePhoto(response.data.secure_url);
         setErrors({ ...errors, profilePhoto: "" }); // Clear any previous error
       } catch (error) {
-        toast.error("Upload failed:", error);
+        toast.error("Upload failed. Please try again.");
+        console.error("Error sending verification email:", error);
       }
+    } else {
+      setErrors({
+        ...errors,
+        profilePhoto: "Please upload a valid image file.",
+      });
     }
   };
 
@@ -71,29 +77,39 @@ const AttendeeDetails = () => {
         toast.error("Failed to send verification email.");
       }
     } catch (error) {
-      toast.error("Error sending verification email:", error);
-      alert(`Error sending verification email: ${error.message}`);
+      toast.error("Error sending verification email.");
+      console.error("Error sending verification email:", error);
     }
   };
 
   const handleSubmit = async () => {
     const newErrors = {};
+
+    // Validate name
     if (!name.trim()) {
       newErrors.name = "Name is required.";
     }
+
+    // Validate email
     if (!email.trim()) {
       newErrors.email = "Email is required.";
     } else if (!validateEmail(email)) {
       newErrors.email = "Please enter a valid email address.";
     }
+
+    // Validate profile photo
     if (!profilePhoto) {
       newErrors.profilePhoto = "Profile photo is required.";
     }
+
+    // If there are errors, set them and stop submission
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
+      toast.error("Please fix the errors before submitting.");
       return;
     }
 
+    // If no errors, proceed with submission
     const attendeeDetails = {
       name,
       email,
