@@ -19,7 +19,8 @@ const TicketSelection = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#05252C] text-white p-4">
-      <div className="bg-[#05252C] border border-[#197686] p-6 rounded-xl shadow-lg w-full max-w-lg">
+      {/* maindiv */}
+      <div className="bg-[#05252C] border border-[#197686] p-6 rounded-xl shadow-lg w-[99%] sm:w-full max-w-lg">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold">Ticket Selection</h2>
           <span className="text-sm">Step 1/3</span>
